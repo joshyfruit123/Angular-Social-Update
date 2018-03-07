@@ -1,15 +1,24 @@
-<h1>Firestore Notes</h1>
-<p>This is a very basic demo of the Firestore database.</p>
+<div *ngIf="currentUpload">
+  <progress class="progress is-success" min=1 max=100 value="{{ currentUpload?.progress }}"></progress>
+  Progress: {{currentUpload?.name}} | {{currentUpload?.progress}}% Complete
+</div>
 
-<input [(ngModel)]="content" placeholder="Add your own note" class="input">
-
-
+<div class="box">
+  <label>
+    <input type="file" class="button" (change)="detectFiles($event)">
+  </label>
+  <button class="button is-primary"
+    [disabled]="!selectedFiles"
+    (click)="uploadSingle()">
+    Upload Cover Photo
+  </button>
+  <hr>
+  <h1>Timeline</h1>
+  <input [(ngModel)]="content" placeholder="What's on your mind?" class="input">
 <button class="button is-success" (click)="createNote()" [disabled]="content?.length < 2 || content?.length > 200">
-  Add Note
+  Post
 </button>
 <hr>
 <div *ngFor="let note of notes | async">
   <note-detail [note]="note"></note-detail>
 </div>
-
-

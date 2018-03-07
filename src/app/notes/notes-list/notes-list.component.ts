@@ -26,6 +26,27 @@ export class NotesListComponent implements OnInit {
   createNote() {
     this.noteService.create(this.content);
     this.content = '';
+
   }
 
+  detectFiles($event: Event) {
+      this.selectedFiles = ($event.target as HTMLInputElement).files;
+  }
+
+  uploadSingle() {
+    const file = this.selectedFiles;
+    if (file && file.length === 1) {
+      this.currentUpload = new Upload(file.item(0));
+      this.upSvc.pushUpload(this.currentUpload);
+    } else {
+      console.error('No file found!');
+    }
+
+    Array.from(files).forEach((file) => {
+      this.currentUpload = new Upload(file);
+      this.upSvc.pushUpload(this.currentUpload);
+    });
+  }
+
+}
 }
